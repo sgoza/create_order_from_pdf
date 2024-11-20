@@ -91,7 +91,7 @@ def create_order_file(table):
         f"#12313;{date_delivery}",
     ]
 
-    for row in table:
+    for row in table[1:]:
         if len(row) >= max(TABLE_COLUMNS.values()):
             order_article = [
                 "11",
