@@ -36,24 +36,37 @@ def extract_table_from_order_pdf(infile):
 
     try:
         with pdfplumber.open(infile) as pdf_file:
-            page = pdf_file.pages[0]
+            tables = []
+            for index, page in enumerate(pdf_file.pages):
+                if index == 0:
+                    bounding_box_no_header = (
+                        0,  # x0
+                        0.4 * float(page.height),  # top
+                        page.width,  # x1
+                        0.92 * float(page.height)  # bottom
+                    )
+                    page = page.within_bbox(bounding_box_no_header)
 
-            bounding_box_no_header = (
-                0,  # x0
-                0.4 * float(page.height),  # top
-                page.width,  # x1
-                page.height,  # bottom
-            )
-            page_no_header = page.within_bbox(bounding_box_no_header)
+                else:
+                    bounding_box_no_top = (
+                        0,  # x0
+                        0.12 * float(page.height),  # top
+                        page.width,  # x1
+                        0.92 * float(page.height)  # bottom
+                    )
+                    page = page.within_bbox(bounding_box_no_top)
 
-            table = page_no_header.extract_table(
-                table_settings={
-                    "vertical_strategy": "explicit",
-                    "explicit_vertical_lines": [38, 68, 349, 415, 465, 510, 564],
-                }
-            )
+                table = page.extract_table(
+                    table_settings={
+                        "vertical_strategy": "explicit",
+                        "explicit_vertical_lines": [38, 68, 349, 415, 465, 510, 564],
+                    }
+                )
 
-            return table
+                if table:
+                    tables.extend(table)
+
+            return tables
 
     except Exception as e:
         logging.error("Error processing PDF file: %s", e)
