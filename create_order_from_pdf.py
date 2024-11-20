@@ -93,12 +93,13 @@ def create_order_file(table):
 
     for row in table[1:]:
         if len(row) >= max(TABLE_COLUMNS.values()):
-            order_article = [
-                "11",
-                f"#12401;{row[TABLE_COLUMNS['article']]}",
-                f"#12441;{row[TABLE_COLUMNS['quantity']]}",
-            ]
-            order_info.extend(order_article)
+            if row[2]:
+                order_article = [
+                    "11",
+                    f"#12401;{row[TABLE_COLUMNS['article']]}",
+                    f"#12441;{row[TABLE_COLUMNS['quantity']]}",
+                ]
+                order_info.extend(order_article)
 
         else:
             logging.warning("Malformed row skipped: %s", row)
