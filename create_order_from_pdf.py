@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
-ddsafdsaf
+Extracts table from a PDF file with an order in it and generates and order
+file that is to be read into the businesssystem.
 """
 
 import sys
@@ -15,10 +16,6 @@ TABLE_COLUMNS = {
     "article": 2,
     "quantity": 3,
 }
-#INPUT_FOLDER = r"C:\LX\import\apotea"
-#OUTPUT_FOLDER = r"C:\LX\import\apotea\pyramid"
-INPUT_FOLDER = r"."
-OUTPUT_FOLDER = r"./output"
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
