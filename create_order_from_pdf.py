@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Extracts table from a PDF file with an order in it and generates and order
-file that is to be read into the businesssystem.
+Extracts order tables from PDF files and generates an order file formatted for
+integration into the business system.
 """
 
 import sys
